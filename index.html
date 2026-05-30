@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chillops — Aircon Servicing Singapore</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a1628;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:100vh;padding:0}
+
+/* Full width desktop, perfect mobile */
+.app{width:100%;max-width:100%;background:#fff;min-height:100vh;display:flex;flex-direction:column}
+
+/* Header */
+.hdr{background:#0a1628;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;background:#1AABFF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.brand{color:#fff;font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.tagline{color:#6b9cc9;font-size:12px;margin-top:2px}
+.hours{background:#112240;color:#1AABFF;font-size:12px;padding:6px 14px;border-radius:20px;font-weight:600;white-space:nowrap}
+
+/* Nav */
+.nav{display:flex;background:#f8f9fa;border-bottom:2px solid #e9ecef;flex-shrink:0;overflow-x:auto}
+.nb{flex:1;min-width:70px;padding:12px 8px 10px;font-size:12px;border:none;background:transparent;cursor:pointer;color:#868e96;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:4px;white-space:nowrap;transition:color 0.2s}
+.nb svg{width:18px;height:18px}
+.nb.on{color:#1AABFF;border-bottom-color:#1AABFF;font-weight:700}
+
+/* Content area */
+.content{flex:1;overflow:hidden;position:relative}
+.tab{display:none;padding:24px;height:100%;overflow-y:auto;max-height:calc(100vh - 130px)}
+.tab.on{display:block}
+
+/* Desktop 2-col layout for booking and services */
+@media(min-width:768px){
+  .tab{padding:32px 48px}
+  .two-col-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .three-col-layout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+}
+
+/* Services */
+.sl{font-size:11px;font-weight:700;color:#868e96;text-transform:uppercase;letter-spacing:0.8px;margin:20px 0 10px}
+.sl:first-child{margin-top:0}
+.services-grid{display:grid;gap:12px}
+@media(min-width:768px){.services-grid{grid-template-columns:1fr 1fr}}
+.sc{background:#f8f9fa;border-radius:14px;padding:16px;border:1.5px solid #e9ecef;transition:border-color 0.2s}
+.sc:hover{border-color:#1AABFF}
+.sc.feat{border:2px solid #1AABFF;background:#f0f9ff}
+.sr{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.sn{font-size:14px;font-weight:700;color:#212529}
+.sd{font-size:12px;color:#6c757d;margin-top:4px;line-height:1.5}
+.bl{font-size:12px;color:#1AABFF;cursor:pointer;text-decoration:none;margin-top:8px;display:inline-block;background:none;border:none;font-weight:600}
+.pt{background:#e7f5ff;color:#1864ab;font-size:13px;font-weight:700;padding:6px 12px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.vb{font-size:10px;color:#868e96;margin-top:4px;text-align:right}
+.vbc{color:#2f9e44;font-weight:700}
+.pb{font-size:10px;background:#d3f9d8;color:#2b8a3e;padding:2px 8px;border-radius:10px;margin-left:6px;font-weight:700}
+.hb{font-size:10px;background:#fff3bf;color:#e67700;padding:2px 8px;border-radius:10px;margin-left:6px;font-weight:700}
+
+/* Pricing */
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid #e9ecef}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f8f9fa;padding:12px 14px;text-align:left;font-weight:700;border-bottom:1px solid #dee2e6;color:#495057;white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid #f1f3f5;vertical-align:middle;color:#212529}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8f9fa}
+.op{color:#1AABFF;font-weight:700}
+.sv{color:#2f9e44;font-weight:700}
+.tip{background:#e7f5ff;border-radius:12px;padding:14px 16px;font-size:13px;color:#1864ab;margin-top:16px;line-height:1.6}
+
+/* FAQ */
+.faq-wrap{max-width:800px}
+.fi{border-bottom:1px solid #f1f3f5}
+.fq{padding:14px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;gap:12px;color:#212529;cursor:pointer}
+.fq svg{width:18px;height:18px;flex-shrink:0;transition:transform 0.2s;color:#1AABFF}
+.fa{font-size:13px;color:#6c757d;line-height:1.7;padding-bottom:14px;display:none}
+.fa.open{display:block}
+.fc{font-size:11px;font-weight:700;color:#1AABFF;text-transform:uppercase;letter-spacing:0.6px;margin:20px 0 4px}
+.fc:first-child{margin-top:0}
+
+/* T&C */
+.tnc-wrap{max-width:800px}
+.ts{margin-bottom:20px;background:#f8f9fa;border-radius:12px;padding:16px}
+.ts h3{font-size:14px;font-weight:700;margin-bottom:8px;color:#212529}
+.ts li{font-size:13px;color:#6c757d;line-height:1.8;margin-bottom:2px}
+.ts ul{padding-left:18px}
+
+/* Booking */
+.book-wrap{max-width:700px}
+.fr{margin-bottom:14px}
+.fl{font-size:12px;color:#495057;margin-bottom:5px;display:block;font-weight:600}
+.fi2,.fs{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #dee2e6;background:#f8f9fa;color:#212529;font-size:14px;transition:border-color 0.2s}
+.fi2:focus,.fs:focus{outline:none;border-color:#1AABFF;background:#fff}
+.tfc{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sbtn{width:100%;background:#1AABFF;color:#fff;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;letter-spacing:0.3px;transition:background 0.2s}
+.sbtn:hover{background:#0090e0}
+.sbtn:disabled{background:#adb5bd;cursor:not-allowed}
+.trust-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.tp{flex:1;min-width:100px;background:#f8f9fa;border-radius:10px;padding:10px;text-align:center;font-size:11px;color:#6c757d;border:1px solid #e9ecef;font-weight:600}
+.tp svg{display:block;margin:0 auto 4px;width:20px;height:20px;color:#1AABFF}
+.cb{background:#d3f9d8;border-radius:16px;padding:32px;text-align:center;display:none}
+.cb h3{color:#2b8a3e;font-size:18px;margin-bottom:10px;font-weight:700}
+.cb p{color:#2f9e44;font-size:14px;line-height:1.6}
+.cal-btn{display:inline-block;margin-top:16px;background:#1AABFF;color:#fff;text-decoration:none;padding:13px 24px;border-radius:12px;font-size:14px;font-weight:700}
+.err{background:#fff5f5;color:#c92a2a;font-size:13px;padding:10px 14px;border-radius:10px;margin-top:10px;display:none;border:1px solid #ffc9c9}
+.loading{display:none;text-align:center;padding:12px;font-size:14px;color:#6c757d}
+
+/* Chat */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 180px);max-width:800px}
+.chat-area{flex:1;display:flex;flex-direction:column;gap:12px;overflow-y:auto;padding-bottom:12px}
+.msg{max-width:75%;padding:11px 15px;border-radius:14px;font-size:14px;line-height:1.5}
+@media(min-width:768px){.msg{max-width:60%}}
+.bot{background:#f1f3f5;color:#212529;border-bottom-left-radius:3px;align-self:flex-start}
+.usr{background:#1AABFF;color:#fff;border-bottom-right-radius:3px;align-self:flex-end}
+.qbtns{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0}
+.qbtn{font-size:12px;padding:7px 14px;border-radius:20px;border:1.5px solid #1AABFF;color:#1AABFF;background:#fff;cursor:pointer;font-weight:600;transition:all 0.2s}
+.qbtn:hover{background:#1AABFF;color:#fff}
+.cin{display:flex;gap:10px;padding-top:14px;border-top:2px solid #f1f3f5;margin-top:12px;flex-shrink:0}
+.cin input{flex:1;font-size:14px;padding:11px 16px;border-radius:12px;border:1.5px solid #dee2e6;background:#f8f9fa;color:#212529}
+.cin input:focus{outline:none;border-color:#1AABFF;background:#fff}
+.csnd{background:#1AABFF;color:#fff;border:none;border-radius:12px;padding:11px 18px;cursor:pointer;font-size:14px;font-weight:700}
+
+/* Page title */
+.page-title{font-size:22px;font-weight:700;color:#212529;margin-bottom:20px}
+@media(min-width:768px){.page-title{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="logo">❄️</div>
+      <div>
+        <div class="brand">Chillops</div>
+        <div class="tagline">Singapore-wide · No hidden fees · 30-day guarantee</div>
+      </div>
+    </div>
+    <div class="hours">9am – 8pm daily</div>
+  </div>
+
+  <div class="nav">
+    <button class="nb on" onclick="sw('chat',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Chat
+    </button>
+    <button class="nb" onclick="sw('services',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Services
+    </button>
+    <button class="nb" onclick="sw('pricing',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Pricing
+    </button>
+    <button class="nb" onclick="sw('faq',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ
+    </button>
+    <button class="nb" onclick="sw('tnc',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>T&C
+    </button>
+    <button class="nb" onclick="sw('book',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Now
+    </button>
+  </div>
+
+  <div class="content">
+    <!-- CHAT -->
+    <div id="chat" class="tab on">
+      <div class="chat-wrap">
+        <div class="chat-area" id="chat-msgs">
+          <div class="msg bot">Hi! I'm the Chillops assistant 👋 We're open 9am–8pm daily, Singapore-wide. How can I help you?</div>
+          <div class="qbtns">
+            <button class="qbtn" onclick="askQ('What services do you offer?')">Our services</button>
+            <button class="qbtn" onclick="askQ('How much does servicing cost?')">Pricing</button>
+            <button class="qbtn" onclick="askQ('How do I book an appointment?')">Book now</button>
+            <button class="qbtn" onclick="askQ('Do you have a guarantee?')">Guarantee</button>
+            <button class="qbtn" onclick="askQ('What areas do you cover?')">Coverage</button>
+            <button class="qbtn" onclick="askQ('How often should I service my aircon?')">Service frequency</button>
+          </div>
+        </div>
+        <div class="cin">
+          <input type="text" id="chat-in" placeholder="Type your question here..." onkeydown="if(event.key==='Enter')sendChat()" />
+          <button class="csnd" onclick="sendChat()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div id="services" class="tab">
+      <div class="page-title">Our Services</div>
+      <div class="sl">Most popular</div>
+      <div class="services-grid">
+        <div class="sc"><div class="sr"><div><div class="sn">General Servicing <span class="pb">Most booked</span></div><div class="sd">Filter clean, coil wash, drainage check, covers wiped. Recommended every 3 months.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">From $30/unit</div><div class="vb vbc">Cheaper than Urban Co.</div></div></div></div>
+        <div class="sc"><div class="sr"><div><div class="sn">FoamJet / PowerJet <span class="hb">Best value</span></div><div class="sd">High-pressure jet wash of blower, coil and drain tray. Removes deep grime and mould.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">From $40/unit</div></div></div></div>
+        <div class="sc"><div class="sr"><div><div class="sn">Chemical Wash</div><div class="sd">Chemical solution on coils and blower in-place. Best for mould, smell or weak cooling. No dismantling.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">$70–$90/unit</div></div></div></div>
+        <div class="sc"><div class="sr"><div><div class="sn">Chemical Overhaul</div><div class="sd">Full dismantle, every part chemical-cleaned and rinsed. Includes ½ gas top-up. For units not serviced in years.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">$120–$150/unit</div><div class="vb vbc">vs Urban Co. $160+</div></div></div></div>
+        <div class="sc"><div class="sr"><div><div class="sn">Condenser Cleaning</div><div class="sd">Cleans the outdoor unit — critical for efficiency and compressor lifespan.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">From $49</div></div></div></div>
+        <div class="sc"><div class="sr"><div><div class="sn">Gas Top-Up (R22/R410A/R32)</div><div class="sd">Refrigerant refill by licensed technician. Aircon runs but doesn't cool? This is likely the fix.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">$50–$120</div></div></div></div>
+      </div>
+      <div class="sl">Repairs</div>
+      <div class="services-grid">
+        <div class="sc"><div class="sr"><div><div class="sn">Repair: Water Leaking</div><div class="sd">$60 diagnostic fee — waived if repair proceeds. Covers blocked drain, dirty filter or installation defect.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">From $60</div></div></div></div>
+        <div class="sc"><div class="sr"><div><div class="sn">Repair: Not Cooling / Noisy / Power</div><div class="sd">$60 diagnostic fee waived if repair proceeds. Technician quotes before any work starts.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">From $60</div></div></div></div>
+      </div>
+      <div class="sl">Annual Contracts — Best Savings</div>
+      <div class="services-grid">
+        <div class="sc feat"><div class="sr"><div><div class="sn">Annual Plan — 2x/year <span class="pb">Recommended</span></div><div class="sd">2 FoamJet services, 12-month validity, 30-day guarantee. Best for most HDB and condo households.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">From $100/yr</div><div class="vb vbc">Urban Co. $108–$110</div></div></div></div>
+        <div class="sc"><div class="sr"><div><div class="sn">Annual Plan — 4x/year</div><div class="sd">Quarterly servicing. Best for families with children, elderly, or allergy sufferers.</div><button class="bl" onclick="sw('book',null)">Book this →</button></div><div style="text-align:right"><div class="pt">From $190/yr</div><div class="vb vbc">Urban Co. $208–$220</div></div></div></div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div id="pricing" class="tab">
+      <div class="page-title">Pricing Comparison</div>
+      <p style="font-size:13px;color:#6c757d;margin-bottom:16px">All Chillops prices include GST and transport. Zero hidden charges.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Service</th><th>Chillops</th><th>Urban Company</th><th>Market Avg</th><th>You Save</th></tr></thead>
+          <tbody>
+            <tr><td>General servicing</td><td class="op">$30/unit</td><td style="color:#6c757d">$46+</td><td style="color:#6c757d">$25–$50</td><td class="sv">$16</td></tr>
+            <tr><td>FoamJet (3 units)</td><td class="op">$100</td><td style="color:#6c757d">$60</td><td style="color:#6c757d">$75–$100</td><td style="color:#6c757d">—</td></tr>
+            <tr><td>Chemical wash</td><td class="op">$70–$90/unit</td><td style="color:#6c757d">N/A</td><td style="color:#6c757d">$60–$100</td><td class="sv">Competitive</td></tr>
+            <tr><td>Chemical overhaul</td><td class="op">$120–$150/unit</td><td style="color:#6c757d">$160+</td><td style="color:#6c757d">$120–$300</td><td class="sv">Up to $40</td></tr>
+            <tr><td>Condenser cleaning</td><td class="op">$49</td><td style="color:#6c757d">$49+</td><td style="color:#6c757d">$49–$87</td><td class="sv">Competitive</td></tr>
+            <tr><td>Gas top-up (R410A)</td><td class="op">$80–$100</td><td style="color:#6c757d">$49+</td><td style="color:#6c757d">$50–$150</td><td style="color:#6c757d">Mid-range</td></tr>
+            <tr><td>Repair diagnostic</td><td class="op">$60 (waived)</td><td style="color:#6c757d">$60 (waived)</td><td style="color:#6c757d">$40–$80</td><td class="sv">Same</td></tr>
+            <tr><td>Annual plan 2x/yr</td><td class="op">From $100</td><td style="color:#6c757d">$108–$110</td><td style="color:#6c757d">$100–$150</td><td class="sv">Up to $10</td></tr>
+            <tr><td>Annual plan 4x/yr</td><td class="op">From $190</td><td style="color:#6c757d">$208–$220</td><td style="color:#6c757d">$180–$250</td><td class="sv">Up to $30</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip">💡 Unlike Urban Company (a freelancer marketplace), Chillops sends the same trained technician every visit. All prices include GST and transport — zero surprise charges at the door.</div>
+    </div>
+
+    <!-- FAQ -->
+    <div id="faq" class="tab">
+      <div class="page-title">Frequently Asked Questions</div>
+      <div class="faq-wrap">
+        <div class="fc">Services</div>
+        <div class="fi"><div class="fq" onclick="tf(this)">What's included in a general service?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Cleaning of air filters, front covers, coils, blower wheel and drain tray. We check drainage flow and inspect for visible faults. Takes about 30–45 min per unit.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Chemical wash vs chemical overhaul — what's the difference?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Chemical wash is done in-place — chemicals applied without dismantling the unit. Chemical overhaul means the full indoor unit is removed from the wall, every part taken apart, cleaned individually and reassembled. Overhaul is needed only when washing alone can't fix the problem.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Do you service all aircon brands?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Yes — Daikin, Mitsubishi, Panasonic, LG, Samsung, Fujitsu, Toshiba, Midea and others. For Cassette and ceiling-mounted units, please mention when booking as extra time may be needed.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">How long does each service take?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">General: ~30 min/unit. FoamJet: ~40 min/unit. Chemical wash: ~45 min/unit. Chemical overhaul: ~60–90 min/unit.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Do I need to be home during the service?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Yes. An adult must be present for the full duration to provide access and sign off on the job. We cannot service units if no one is home.</div></div>
+        <div class="fc">Pricing & Payment</div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Are there hidden charges?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">None. All prices include GST and transport. If additional work is needed, the technician quotes you before proceeding. You are never charged for work you didn't agree to.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">What payment methods do you accept?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Cash, PayNow and bank transfer. Payment is due on the day of service. Annual contracts are paid upfront to lock in pricing.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Why is the repair diagnostic $60?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">It covers the technician's time and transport to diagnose the issue. If you proceed with the repair, the $60 is waived — you only pay the repair cost. If you decline, the $60 stands.</div></div>
+        <div class="fc">Bookings</div>
+        <div class="fi"><div class="fq" onclick="tf(this)">How quickly can I get an appointment?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Same-day or next-day slots available subject to availability. Book by 12pm for a same-day afternoon slot. Weekend slots fill fast — book at least 2 days ahead.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Can I reschedule or cancel?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Cancel or reschedule at least 24 hours before at no charge. Within 24 hours or no-show = $20 admin fee. Annual contract holders get one free reschedule per year.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">What areas do you serve?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Singapore island-wide — all HDB, condo and landed properties. Commercial units available on request.</div></div>
+        <div class="fc">After Service</div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Is there a service guarantee?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Yes — 30-day guarantee on every job. Same issue recurs within 30 days, we return at no charge. Annual contract holders get priority re-service within 48 hours.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">Aircon still not cold after servicing — what do I do?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Contact us within 30 days and we'll investigate at no cost. Common causes are low refrigerant gas or a faulty component — both covered under our follow-up visit policy.</div></div>
+        <div class="fi"><div class="fq" onclick="tf(this)">How often should I service my aircon in Singapore?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div><div class="fa">Every 3 months is ideal given Singapore's heat and humidity. Minimum twice a year. Annual chemical wash once a year is recommended to prevent mould and maintain air quality.</div></div>
+      </div>
+    </div>
+
+    <!-- T&C -->
+    <div id="tnc" class="tab">
+      <div class="page-title">Terms & Conditions</div>
+      <div class="tnc-wrap">
+        <div class="ts"><h3>1. Booking & Confirmation</h3><ul><li>Bookings confirmed only upon WhatsApp or email confirmation from Chillops.</li><li>We may reschedule due to technician unavailability — you will be notified at least 2 hours before.</li><li>Slots are not guaranteed until confirmed.</li></ul></div>
+        <div class="ts"><h3>2. Cancellations & Rescheduling</h3><ul><li>Cancel or reschedule 24+ hours before — no charge.</li><li>Within 24 hours or no-show — $20 admin fee applies.</li><li>Annual contract holders: one free reschedule per year.</li></ul></div>
+        <div class="ts"><h3>3. Service Guarantee</h3><ul><li>30-day guarantee on all jobs. Same issue recurs — we return at no charge.</li><li>Does not cover new faults unrelated to the original service or third-party interference.</li><li>Annual contract holders: priority re-service within 48 hours.</li></ul></div>
+        <div class="ts"><h3>4. Pricing & Payments</h3><ul><li>All prices include GST and transport unless stated otherwise.</li><li>Additional charges quoted and confirmed by customer before proceeding.</li><li>Payment due on day of service. Annual contracts paid upfront.</li><li>Accepted: Cash, PayNow, bank transfer. No credit card.</li></ul></div>
+        <div class="ts"><h3>5. Repairs & Diagnostics</h3><ul><li>$60 diagnostic fee applies to all repair visits — waived if repair proceeds.</li><li>Parts: 90-day warranty. Labour: 30-day warranty.</li></ul></div>
+        <div class="ts"><h3>6. Customer Responsibilities</h3><ul><li>Adult must be present for full service duration.</li><li>Clear access to indoor and outdoor units must be provided.</li><li>We are not liable for pre-existing damage discovered during servicing.</li></ul></div>
+        <div class="ts"><h3>7. Annual Contracts</h3><ul><li>Valid 12 months from date of first service.</li><li>Non-transferable and non-refundable after first service has been rendered.</li><li>Unused sessions do not carry over beyond 12 months.</li></ul></div>
+        <div class="ts"><h3>8. Liability</h3><ul><li>Liability limited to cost of service rendered.</li><li>We carry public liability insurance for damage caused directly by our technicians.</li></ul></div>
+      </div>
+    </div>
+
+    <!-- BOOKING -->
+    <div id="book" class="tab">
+      <div class="book-wrap">
+        <div class="page-title">Book an Appointment</div>
+        <div id="bform">
+          <div class="tfc">
+            <div class="fr"><label class="fl">Your name *</label><input class="fi2" id="f-name" type="text" placeholder="e.g. John Tan" /></div>
+            <div class="fr"><label class="fl">WhatsApp number *</label><input class="fi2" id="f-phone" type="text" placeholder="+65 9xxx xxxx" /></div>
+          </div>
+          <div class="fr"><label class="fl">Full address *</label><input class="fi2" id="f-addr" type="text" placeholder="Block / Unit / Street / Postal code" /></div>
+          <div class="fr"><label class="fl">Service type *</label>
+            <select class="fs" id="f-service">
+              <option value="">— Select a service —</option>
+              <option>General servicing</option>
+              <option>FoamJet / PowerJet servicing</option>
+              <option>Chemical wash</option>
+              <option>Chemical overhaul</option>
+              <option>Condenser cleaning</option>
+              <option>Gas top-up</option>
+              <option>Repair: water leaking</option>
+              <option>Repair: not cooling</option>
+              <option>Repair: noisy / power issues</option>
+              <option>Annual plan — 2x/year</option>
+              <option>Annual plan — 4x/year</option>
+            </select>
+          </div>
+          <div class="tfc">
+            <div class="fr"><label class="fl">No. of units *</label>
+              <select class="fs" id="f-units"><option>1 unit</option><option>2 units</option><option selected>3 units</option><option>4 units</option><option>5 units</option><option>6+ units</option></select>
+            </div>
+            <div class="fr"><label class="fl">Aircon brand</label>
+              <select class="fs" id="f-brand"><option>Daikin</option><option>Mitsubishi</option><option>Panasonic</option><option>LG</option><option>Samsung</option><option>Fujitsu</option><option>Other</option></select>
+            </div>
+          </div>
+          <div class="tfc">
+            <div class="fr"><label class="fl">Preferred date *</label><input class="fi2" id="f-date" type="date" /></div>
+            <div class="fr"><label class="fl">Preferred time *</label>
+              <select class="fs" id="f-time">
+                <option>9:00 AM – 11:00 AM</option>
+                <option>11:00 AM – 1:00 PM</option>
+                <option>2:00 PM – 4:00 PM</option>
+                <option>4:00 PM – 6:00 PM</option>
+                <option>6:00 PM – 8:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="fr"><label class="fl">Notes (optional)</label><input class="fi2" id="f-notes" type="text" placeholder="e.g. Cassette unit, gate code, dog at home..." /></div>
+          <button class="sbtn" id="submit-btn" onclick="submitBooking()">Confirm Booking</button>
+          <div class="loading" id="loading">Sending your booking... ⏳</div>
+          <div class="err" id="err-msg">Something went wrong. Please WhatsApp us directly at +65 9750 7850.</div>
+          <div class="trust-row">
+            <div class="tp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>30-day guarantee</div>
+            <div class="tp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>No hidden fees</div>
+            <div class="tp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Driver notified instantly</div>
+            <div class="tp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Calendar saved</div>
+          </div>
+        </div>
+        <div class="cb" id="cbox">
+          <div style="font-size:52px;margin-bottom:14px">✅</div>
+          <h3>Booking Confirmed!</h3>
+          <p id="confirm-details"></p>
+          <a id="cal-btn" href="#" target="_blank" class="cal-btn">📅 Save to Google Calendar</a>
+          <p style="margin-top:14px;font-size:12px;color:#2f9e44">We'll WhatsApp you within 30 min to confirm · 9am–8pm daily</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// CONFIG — change these for each new company
+// ============================================
+const CONFIG = {
+  companyName: 'Chillops',
+  telegramToken: '8954741390:AAGaDatcvpROha4rGa5mV_Vk-mtDBjyupxg',
+  telegramChatId: '727510067',
+  whatsapp: '+6597507850',
+  hours: '9am – 8pm daily'
+};
+// ============================================
+
+const faqs = {
+  'service': 'We offer general servicing (from $30/unit), FoamJet cleaning, chemical wash, chemical overhaul, condenser cleaning, gas top-up, repairs, and annual contracts. Tap the Services tab to see everything with pricing.',
+  'cost': 'General servicing from $30/unit. FoamJet from $40/unit. Chemical wash $70–$90/unit. Chemical overhaul $120–$150/unit. All prices include GST and transport — zero hidden charges.',
+  'pric': 'General servicing from $30/unit. FoamJet from $40/unit. Chemical wash $70–$90/unit. Chemical overhaul $120–$150/unit. All prices include GST and transport.',
+  'book': 'Tap the Book Now tab above — fill in your details in under 1 minute. We\'ll WhatsApp you within 30 min to confirm. Open 9am–8pm daily.',
+  'appoint': 'Tap the Book Now tab above — fill in your details in under 1 minute. We\'ll WhatsApp you within 30 min to confirm.',
+  'guarant': 'Yes — 30-day guarantee on every job. Same issue comes back within 30 days, we return at no charge. Annual contract holders get priority re-service within 48 hours.',
+  'area': 'Singapore island-wide — all HDB, condo and landed properties. Commercial units on request.',
+  'cover': 'Singapore island-wide — HDB, condo, landed and commercial.',
+  'cancel': 'Cancel or reschedule 24+ hours before at no charge. Within 24 hours or no-show = $20 admin fee.',
+  'reschedul': 'Cancel or reschedule 24+ hours before at no charge. Within 24 hours or no-show = $20 admin fee.',
+  'pay': 'Cash, PayNow and bank transfer. Payment on day of service. Annual contracts paid upfront.',
+  'chemic': 'Chemical wash = in-place cleaning, no dismantling. Chemical overhaul = full dismantle, every part cleaned individually. Overhaul is only needed when washing can\'t fix the issue.',
+  'gas': 'Gas top-up from $50–$120 depending on refrigerant type (R22, R410A, R32). Done by a licensed technician. If your aircon runs but doesn\'t cool well, this is likely the fix.',
+  'how long': 'General: ~30 min/unit. FoamJet: ~40 min/unit. Chemical wash: ~45 min/unit. Chemical overhaul: ~60–90 min/unit.',
+  'brand': 'Yes — Daikin, Mitsubishi, Panasonic, LG, Samsung, Fujitsu, Toshiba, Midea and more.',
+  'hour': 'We operate 9am to 8pm daily, Singapore-wide.',
+  'annual': 'Annual plans from $100/yr (2x servicing) or $190/yr (4x quarterly). Valid 12 months, 30-day guarantee included.',
+  'frequen': 'Every 3 months is ideal in Singapore\'s climate. Minimum twice a year. Annual chemical wash once a year prevents mould and keeps air quality healthy.',
+  'often': 'Every 3 months is ideal in Singapore\'s climate. Minimum twice a year. Annual chemical wash once a year prevents mould and keeps air quality healthy.',
+};
+
+function sw(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if (btn) btn.classList.add('on');
+  else {
+    const idx = ['chat','services','pricing','faq','tnc','book'].indexOf(id);
+    document.querySelectorAll('.nb')[idx].classList.add('on');
+  }
+}
+
+function tf(el) {
+  const a = el.nextElementSibling;
+  a.classList.toggle('open');
+  el.querySelector('svg').style.transform = a.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+function askQ(q) {
+  const msgs = document.getElementById('chat-msgs');
+  const um = document.createElement('div');
+  um.className = 'msg usr';
+  um.textContent = q;
+  msgs.appendChild(um);
+  const key = q.toLowerCase();
+  let ans = 'Thanks for your question! For the most accurate info, tap the relevant tab above or WhatsApp us at ' + CONFIG.whatsapp + '. Open ' + CONFIG.hours + '.';
+  for (const k in faqs) {
+    if (key.includes(k)) { ans = faqs[k]; break; }
+  }
+  setTimeout(() => {
+    const bm = document.createElement('div');
+    bm.className = 'msg bot';
+    bm.textContent = ans;
+    msgs.appendChild(bm);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 600);
+  document.getElementById('chat-in').value = '';
+}
+
+function sendChat() {
+  const v = document.getElementById('chat-in').value.trim();
+  if (v) askQ(v);
+}
+
+async function sendTelegram(message) {
+  const url = `https://api.telegram.org/bot${CONFIG.telegramToken}/sendMessage`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: CONFIG.telegramChatId,
+      text: message,
+      parse_mode: 'HTML'
+    })
+  });
+  if (!response.ok) throw new Error('Telegram failed');
+}
+
+async function submitBooking() {
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const addr = document.getElementById('f-addr').value.trim();
+  const service = document.getElementById('f-service').value;
+  const units = document.getElementById('f-units').value;
+  const brand = document.getElementById('f-brand').value;
+  const date = document.getElementById('f-date').value;
+  const time = document.getElementById('f-time').value;
+  const notes = document.getElementById('f-notes').value.trim();
+
+  if (!name || !phone || !addr || !service || !date) {
+    const err = document.getElementById('err-msg');
+    err.textContent = 'Please fill in all required fields marked with *.';
+    err.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('err-msg').style.display = 'none';
+  document.getElementById('submit-btn').disabled = true;
+  document.getElementById('loading').style.display = 'block';
+
+  const msg =
+`🧊 <b>NEW CHILLOPS BOOKING</b>
+
+👤 <b>Name:</b> ${name}
+📱 <b>WhatsApp:</b> ${phone}
+📍 <b>Address:</b> ${addr}
+🔧 <b>Service:</b> ${service}
+❄️ <b>Units:</b> ${units} — ${brand}
+📅 <b>Date:</b> ${date}
+⏰ <b>Time:</b> ${time}
+📝 <b>Notes:</b> ${notes || 'None'}
+
+Reply on WhatsApp to confirm the slot.`;
+
+  try {
+    await sendTelegram(msg);
+
+    // Build Google Calendar link
+    const timeMap = {
+      '9:00 AM – 11:00 AM': ['090000','110000'],
+      '11:00 AM – 1:00 PM': ['110000','130000'],
+      '2:00 PM – 4:00 PM': ['140000','160000'],
+      '4:00 PM – 6:00 PM': ['160000','180000'],
+      '6:00 PM – 8:00 PM': ['180000','200000']
+    };
+    const [startT, endT] = timeMap[time] || ['090000','110000'];
+    const dateStr = date.replace(/-/g,'');
+    const calTitle = encodeURIComponent(`Chillops — ${service}`);
+    const calDetails = encodeURIComponent(`Customer: ${name}\nPhone: ${phone}\nUnits: ${units} (${brand})\nNotes: ${notes || 'None'}`);
+    const calLocation = encodeURIComponent(addr);
+    const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&dates=${dateStr}T${startT}/${dateStr}T${endT}&details=${calDetails}&location=${calLocation}`;
+    document.getElementById('cal-btn').href = calUrl;
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('bform').style.display = 'none';
+    document.getElementById('cbox').style.display = 'block';
+    document.getElementById('confirm-details').innerHTML =
+      `<strong>${name}</strong> · ${service} · ${date} · ${time}<br>Zhiyi has been notified on Telegram. We'll WhatsApp you shortly.`;
+
+  } catch(e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('submit-btn').disabled = false;
+    document.getElementById('err-msg').textContent = 'Could not send booking. Please WhatsApp us at ' + CONFIG.whatsapp;
+    document.getElementById('err-msg').style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>
